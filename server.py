@@ -35,7 +35,7 @@ def get_tasks():
     pass
 
 @app.route("/get_today_tasks", methods=["GET"])
-def get_tasks():
+def get_today_tasks():
     taskstoreturn = []
     with open(filename, "r") as f:
             data = json.load(f)
