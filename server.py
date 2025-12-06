@@ -35,27 +35,28 @@ def get_tasks():
     pass
 
 def checkTask():
-    #if datetime.now().hour in [0,12,16,20]:
-        with open(filename, "r") as f:
-            data = json.load(f)
-
-        for task in data["tasks"]:
-            if task["repeat"] == "Every x days":
-                days_passed = int((time.time() - task['timestamp']) / (24*60*60))
-                if days_passed%task["days"] == 0:
-                    sendNotification(task)
-
-            
-            elif task["repeat"] == "Every x":
-                dayofweek = datetime.now().weekday()
-                if task['daysofweek'][dayofweek] == 1:
-                    sendNotification(task)
-            
-            if task["repeat"] == "Every x day of month":
-                dayofmonth = datetime.now().day
-                if task["days"] == dayofmonth:
-                    sendNotification(task)
-        time.sleep(1)
+    while True:
+        #if datetime.now().hour in [0,12,16,20]:
+            with open(filename, "r") as f:
+                data = json.load(f)
+    
+            for task in data["tasks"]:
+                if task["repeat"] == "Every x days":
+                    days_passed = int((time.time() - task['timestamp']) / (24*60*60))
+                    if days_passed%task["days"] == 0:
+                        sendNotification(task)
+    
+                
+                elif task["repeat"] == "Every x":
+                    dayofweek = datetime.now().weekday()
+                    if task['daysofweek'][dayofweek] == 1:
+                        sendNotification(task)
+                
+                if task["repeat"] == "Every x day of month":
+                    dayofmonth = datetime.now().day
+                    if task["days"] == dayofmonth:
+                        sendNotification(task)
+            time.sleep(1)
 
 def sendNotification(task):
     print(task["name"])
