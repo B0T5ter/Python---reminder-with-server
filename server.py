@@ -30,10 +30,10 @@ def add_task():
     )
     return jsonify({"status": "ok"})
 
-@app.route("/get_specific_tasks", methods=["GET"])
+@app.route("/get_specific_tasks", methods=["POST"])
 def get_specific_tasks():
     specific_data = request.json
-
+    print(specific_data)
     with open(filename, "r") as f:
         data = json.load(f)
     
