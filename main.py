@@ -6,7 +6,7 @@ root.title("Moja apka")
 root.geometry("400x500")
 
 def edit_task(timestamp):
-    req = requests.post("http://192.168.50.200:5000/add_task", json=timestamp)
+    req = requests.post("http://192.168.50.200:5000/get_specific_tasks", json=timestamp)
     data = req.json()
 
     for widget in root.winfo_children():
