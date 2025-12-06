@@ -109,5 +109,7 @@ def main_win():
     tk.Button(root, text="Add", command=add_func, font=("Arial", 15)).grid(row=1, column=1, padx=5, pady=5,sticky='ew')
     tk.Button(root, text="List all", command=add_func, font=("Arial", 15)).grid(row=2, column=1, padx=5, pady=5,sticky='ew')
 if __name__ == "__main__":
+    res = requests.get("http://192.168.50.200:5000/get_today_tasks")
+    print(res)
     main_win()
     root.mainloop()
