@@ -60,7 +60,7 @@ def get_today_tasks():
 
 def checkTask():
     while True:
-        if datetime.now().hour in [0,12,16,20]:
+        if datetime.now().hour in [0,12,16,20] and datetime.now().second == 0 and datetime.now().min == 0:
             with open(filename, "r") as f:
                 data = json.load(f)
 
