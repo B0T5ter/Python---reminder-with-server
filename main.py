@@ -1,4 +1,5 @@
 import tkinter as tk
+import requests
 
 root = tk.Tk()
 root.title("Moja apka")
@@ -17,6 +18,9 @@ def add_func():
     
     pon,wt,sr,cz,pt,sb,nd = tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar()
 
+    name = tk.StringVar(root)
+    name.set("None")
+
     root.grid_columnconfigure(0, weight=1)
     root.grid_columnconfigure(1, weight=1)
 
@@ -25,7 +29,7 @@ def add_func():
 
     tk.Button(root, text="Back", command=main_win, font=("Arial", 15)).grid(row=0, column=1, padx=5, pady=5,sticky='ew')
 
-    tk.Button(root, text="Add", command=lambda: add_task(wybor.get(),entryoption.get(),pon.get(), wt.get(),sr.get(),cz.get(),pt.get(),sb.get(),nd.get()), font=("Arial", 15)).grid(row=1, column=1, padx=5, pady=5, sticky='ew')
+    tk.Button(root, text="Add", command=lambda: add_task(nameEntry.get(),wybor.get(),entryoption.get(),pon.get(), wt.get(),sr.get(),cz.get(),pt.get(),sb.get(),nd.get()), font=("Arial", 15)).grid(row=1, column=1, padx=5, pady=5, sticky='ew')
 
 
     nameEntry = tk.Entry(root)
@@ -87,10 +91,9 @@ def add_func():
     wybor.trace("w", update_checks)
     update_checks()
 
-def add_task(wybor,entry,pon,wt,sr,cz,pt,sb,nd):
-        print(wybor,entry,pon,wt,sr,cz,pt,sb,nd)
-
-
+def add_task(name, wybor,entry,pon,wt,sr,cz,pt,sb,nd):
+        task = {'name': name, 'repeat': wybor, 'days': entry, "daysofweek":[pon,wt,sr,cz,pt,sb,nd]}
+        requests.post("http://192.168.50.200:5000/add_task", json=task)
 def main_win():
     for widget in root.winfo_children():
         widget.destroy()
