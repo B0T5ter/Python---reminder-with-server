@@ -50,7 +50,7 @@ def get_today_tasks():
             for task in data["tasks"]:
                 if task["repeat"] == "Every x days":
                     days_passed = int((time.time() - task['timestamp']) / (24*60*60))
-                    if days_passed%task["days"] == 0:
+                    if days_passed%int(task["days"]) == 0:
                         taskstoreturn.append(task)
 
 
@@ -61,7 +61,7 @@ def get_today_tasks():
 
                 if task["repeat"] == "Every x day of month":
                     dayofmonth = datetime.now().day
-                    if task["days"] == dayofmonth:
+                    if int(task["days"]) == dayofmonth:
                         taskstoreturn.append(task)
     return jsonify(taskstoreturn)
 

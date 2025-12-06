@@ -14,13 +14,19 @@ def edit_task(timestamp):
     
     wybor = tk.StringVar(root)
     wybor.set(data['repeat'])
-
     entryoption = tk.StringVar(root)
-    entryoption.set("None")
+    entryoption.set(data['repeat'])
 
     
-    pon,wt,sr,cz,pt,sb,nd = tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar(),tk.IntVar()
+    pon, wt, sr, cz, pt, sb, nd = tk.IntVar(), tk.IntVar(), tk.IntVar(), tk.IntVar(), tk.IntVar(), tk.IntVar(), tk.IntVar()
 
+    pon.set(data['daysofweek'][0])
+    wt.set(data['daysofweek'][1])
+    sr.set(data['daysofweek'][2])
+    cz.set(data['daysofweek'][3])
+    pt.set(data['daysofweek'][4])
+    sb.set(data['daysofweek'][5])
+    nd.set(data['daysofweek'][6])
     name = tk.StringVar(root)
     name.set(data['name'])
 
@@ -32,12 +38,12 @@ def edit_task(timestamp):
 
     tk.Button(root, text="Back", command=main_win, font=("Arial", 15)).grid(row=0, column=1, padx=5, pady=5,sticky='ew')
 
-    tk.Button(root, text="Add", command=lambda: add_task(nameEntry.get(),wybor.get(),entryoption.get(),pon.get(), wt.get(),sr.get(),cz.get(),pt.get(),sb.get(),nd.get()), font=("Arial", 15)).grid(row=1, column=1, padx=5, pady=5, sticky='ew')
+    tk.Button(root, text="Edit", command=lambda: add_task(nameEntry.get(),wybor.get(),entryoption.get(),pon.get(), wt.get(),sr.get(),cz.get(),pt.get(),sb.get(),nd.get()), font=("Arial", 15)).grid(row=1, column=1, padx=5, pady=5, sticky='ew')
 
 
     nameEntry = tk.Entry(root)
     nameEntry.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
-
+    nameEntry.insert(0, data['name'])
     tk.Label(root, text="Repeting", font=("Arial", 15), anchor="w").grid(row=3, column=0, padx=5, pady=5, sticky="ew")
     wybor = tk.StringVar(root)
     wybor.set("None")
@@ -63,6 +69,7 @@ def edit_task(timestamp):
     labeloption3 = tk.Label(frame_checks, text="Which day of month?", font=("Arial", 15), anchor="w")
 
     entryoption = tk.Entry(frame_checks)
+    entryoption.insert(0,data['days'])
     
     def update_checks(*args):
         if wybor.get() == "Every x days":
@@ -70,6 +77,7 @@ def edit_task(timestamp):
                 w.pack_forget()
             labeloption1.pack(anchor='w')
             entryoption.pack(anchor='w',padx=10)
+            entryoption.insert(0,data['days'])
 
         elif wybor.get() == "Every x":
             for w in frame_checks.winfo_children():
