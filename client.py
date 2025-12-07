@@ -1,8 +1,9 @@
 import tkinter as tk
 import requests
+from tkinter import messagebox
 
 root = tk.Tk()
-root.title("Moja apka")
+root.title("Remainder")
 root.geometry("400x500")
 def all_win():
     for widget in root.winfo_children():
@@ -215,14 +216,18 @@ def add_func():
 def delete_func(timestamp):
     requests.post("http://192.168.50.200:5000/delete_task", json={"timestamp": timestamp})
     all_win()
+
 def change_task(name = None, wybor= None,entry= None,pon= None,wt= None,sr= None,cz= None,pt= None,sb= None,nd= None, timestamp = None, backTo = None):
-    task = {'name': name, 'repeat': wybor, 'days': entry, "daysofweek":[pon,wt,sr,cz,pt,sb,nd], 'timestamp':timestamp}
-    requests.post("http://192.168.50.200:5000/change_task", json=task)
-    print(backTo)
-    if backTo == "all":
-        main_win()
+    if name != '' or entry == '' and pon == 0 and wt == 0 and sr == 0 and cz == 0 and pt == 0 and sb == 0 and nd == 0:
+        task = {'name': name, 'repeat': wybor, 'days': entry, "daysofweek":[pon,wt,sr,cz,pt,sb,nd], 'timestamp':timestamp}
+        requests.post("http://192.168.50.200:5000/change_task", json=task)
+        print(backTo)
+        if backTo == "all":
+            main_win()
+        else:
+            all_win()
     else:
-        all_win()
+        messagebox.showerror("Error", "Provide all information")
     
 
 def add_task(name = None, wybor= None,entry= None,pon= None,wt= None,sr= None,cz= None,pt= None,sb= None,nd= None):

@@ -82,7 +82,12 @@ def get_all_tasks():
         data = json.load(f)
 
         return jsonify(data)
-    
+
+@app.route("/clear_database", methods=["GET"])
+def clear_database():
+    with open(filename, "w") as f:
+        json.dump({"tasks": []}, f, indent=4)
+
 @app.route("/get_today_tasks", methods=["GET"])
 def get_today_tasks():
     taskstoreturn = []
