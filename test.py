@@ -1,4 +1,3 @@
-from datetime import datetime
+import requests
 
-now = datetime.now()
-print(type(now.hour), now.minute)
+requests.post("http://192.168.50.200:5000/clear_database")
