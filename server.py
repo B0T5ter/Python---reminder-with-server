@@ -112,7 +112,7 @@ def get_today_tasks():
 #Checking if it is time to notification
 def checkTask():
     while True:
-        if datetime.now().hour in [0,12,16,20] and datetime.now().second == 0 and datetime.now().min == 0:
+        if datetime.now().hour in [0,12,16,20] and datetime.now().second == 0 and datetime.now().minute  == 0:
             with open(filename, "r") as f:
                 data = json.load(f)
 
@@ -121,7 +121,6 @@ def checkTask():
                     days_passed = int((time.time() - task['timestamp']) / (24*60*60))
                     if days_passed%task["days"] == 0:
                         sendNotification(task)
-
 
                 elif task["repeat"] == "Every x":
                     dayofweek = datetime.now().weekday()
