@@ -157,4 +157,4 @@ def backgroundcheck():
 
 if __name__ == "__main__":
     backgroundcheck()
-    app.run(host="0.0.0.0", port=5000)  # dostępny w sieci lokalnej
+    app.run(host="0.0.0.0", port=443)  # dostępny w sieci lokalnej

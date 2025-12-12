@@ -5,7 +5,9 @@ from tkinter import messagebox
 root = tk.Tk()
 root.title("Reminder")
 root.geometry("400x500")
-SERVERIP = '192.168.50.200'
+SERVERIP = '84.205.172.7'
+SERVERPORT = "443"
+
 #Widgts for showing all task in databse
 def all_win():
     for widget in root.winfo_children():
@@ -22,7 +24,7 @@ def all_win():
     listbox = tk.Listbox(root, bg='gray', font=("Arial", 15))
     listbox.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
 
-    res = requests.get(f"http://{SERVERIP}:5000/get_all_tasks")
+    res = requests.get(f"http://{SERVERIP}:{SERVERPORT}/get_all_tasks")
     todos = res.json()['tasks']
     idtimestamp = []
     for todo in todos:
@@ -39,7 +41,7 @@ def all_win():
     
 #Widgets for editing task
 def edit_func(timestamp, backTo):
-    req = requests.post(f"http://{SERVERIP}:5000/get_specific_tasks", json=timestamp)
+    req = requests.post(f"http://{SERVERIP}:{SERVERPORT}/get_specific_tasks", json=timestamp)
     data = req.json()
     for widget in root.winfo_children():
         widget.destroy()
@@ -223,7 +225,7 @@ def add_func():
 
 #Funcion that send signal to delete specific task
 def delete_func(timestamp):
-    requests.post(f"http://{SERVERIP}:5000/delete_task", json={"timestamp": timestamp})
+    requests.post(f"http://{SERVERIP}:{SERVERPORT}/delete_task", json={"timestamp": timestamp})
     all_win()
 
 #Funcion that send information to change specific task
@@ -234,7 +236,7 @@ def change_task(name = None, wybor= None,entry= None,pon= None,wt= None,sr= None
         messagebox.showerror("Error", "Please, provide days to remind")
     else:
         task = {'name': name, 'repeat': wybor, 'days': entry, "daysofweek":[pon,wt,sr,cz,pt,sb,nd], 'timestamp':timestamp}
-        requests.post(f"http://{SERVERIP}:5000/change_task", json=task)
+        requests.post(f"http://{SERVERIP}:{SERVERPORT}/change_task", json=task)
         print(backTo)
         if backTo == "all":
             main_win()
@@ -249,7 +251,7 @@ def add_task(name = None, wybor= None,entry= None,pon= None,wt= None,sr= None,cz
     elif entry == '' and pon == 0 and wt == 0 and sr == 0 and cz == 0 and pt == 0 and sb == 0 and nd == 0:
         messagebox.showerror("Error", "Please, provide days to remind")
     else:
-        requests.post(f"http://{SERVERIP}:5000/add_task", json=task)
+        requests.post(f"http://{SERVERIP}:{SERVERPORT}/add_task", json=task)
         main_win()
 
 #Widgts for main window that show task for today
@@ -268,7 +270,7 @@ def main_win():
     listbox = tk.Listbox(root, bg='gray', font=("Arial", 15))
     listbox.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
 
-    res = requests.get(f"http://{SERVERIP}:5000/get_today_tasks")
+    res = requests.get(f"http://{SERVERIP}:{SERVERPORT}/get_today_tasks")
     todos = res.json()
     idtimestamp = []
     for todo in todos:
